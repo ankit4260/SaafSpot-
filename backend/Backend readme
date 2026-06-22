@@ -1,0 +1,93 @@
+# Saaf Spot — Backend
+
+Express + MongoDB API powering report submission, image verification, points, streaks, and dashboard data for Saaf Spot.
+
+## Tech stack
+
+- Node.js + Express
+- MongoDB with Mongoose (2dsphere geospatial indexing on report locations)
+- JWT auth via HTTP-only cookies
+- Cloudinary (media storage) + Multer (multipart upload handling)
+- Gemini API for AI-assisted verification
+- SHA-256 image hashing (Node `crypto`) for duplicate-submission detection
+
+## Setup
+
+```bash
+cd backend
+npm install
+```
+
+Create a `.env` file in `backend/` (never commit this — it's in `.gitignore`):
+
+```
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret_here
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+PORT=3000
+```
+
+Run the server:
+
+```bash
+npm start
+```
+
+By default the API runs at `http://localhost:3000`.
+
+## Folder structure
+
+```
+backend/
+├── db/
+│   └── db.js              MongoDB connection
+├── middleware/
+│   ├── auth.js             JWT auth middleware
+│   └── multer.js            File upload middleware
+├── model/
+│   ├── user.js               User schema
+│   └── report.js             Report schema
+├── routes/
+│   └── reports.js            Report/dashboard/submission routes
+├── utils/
+│   └── updateStreak.js        Streak calculation helper
+├── verifyReport/
+│   └── verify.js               AI/image verification logic
+├── .env                        (not committed)
+└── server.js / index.js
+```
+
+## API routes
+
+All routes below are mounted under `/route/reports` and require authentication (`authMiddleware`) unless noted.
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `POST` | `/report` | Submit a new report (before/after photo + video via multipart form). Runs duplicate-hash check, uploads media to Cloudinary, runs verification, awards points, updates streak. |
+| `GET` | `/mySubmissions` | Returns the logged-in user's own reports. |
+| `GET` | `/dashboard` | Returns the logged-in user's stats (points, city rank, verified count, streak) plus a community-wide recent activity feed. |
+| `GET` | `/leaderboard` | Returns the logged-in user's data for leaderboard display. |
+
+### Report fields (multipart/form-data)
+
+- `title` (string, required)
+- `category` (string, required — one of: Garbage dump, Overflowing bin, Open drainage / sewage, Construction debris, Stagnant water, Plastic waste, Other)
+- `description` (string, required)
+- `landmark` (string, optional)
+- `location` (JSON string — `{ type: "Point", coordinates: [lng, lat] }`)
+- `beforePhoto` (file, required)
+- `afterPhoto` (file, required)
+- `video` (file, required)
+
+## Models
+
+**User**: `firstName`, `lastName`, `email`, `hashPassword`, `city`, `points`, `badges`, `streak`, `lastReportDate`
+
+**Report**: `userId`, `title`, `category`, `description`, `beforePhotoUrl`, `afterPhotoUrl`, `videoUrl`, `beforePhotoHash`, `afterPhotoHash`, `location` (GeoJSON Point), `landmark`, `status` (`AI Verifying` / `Verified` / `Partial Match` / `Rejected`), `trustScore`, `pointsAwarded`, `createdAt`
+
+## Security notes
+
+- Cloudinary credentials and JWT secret must live in `.env`, never hardcoded in source.
+- If a secret was ever committed to git history, rotate it in the provider dashboard even after removing it from the file.

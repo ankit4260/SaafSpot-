@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saaf Spot — Log in or Sign up</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22><rect width=24 height=24 rx=6 fill=%22%231B4332%22/><path d=%22M7 13c0-4 3-7 8-7-1 5-3 8-8 9-1-1-1-1 0-2z%22 fill=%22%23C2F23D%22/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --green-deep:   #1B4332;
+  --green-mid:    #2D6A4F;
+  --green-soft:   #52B788;
+  --lime:         #C2F23D;
+  --lime-dark:    #9EC42A;
+  --lime-faint:   #F0FAD0;
+  --ink:          #0F1A14;
+  --ink-2:        #243B2E;
+  --ink-3:        #3D5A47;
+  --muted:        #6B8F77;
+  --surface:      #F7FAF5;
+  --white:        #FFFFFF;
+  --border:       #D8EBD0;
+  --border-focus: #52B788;
+  --error:        #D44;
+  --shadow-card:  0 8px 40px rgba(27,67,50,.18);
+  --radius-sm:    8px;
+  --radius-md:    14px;
+  --radius-lg:    22px;
+  --font-display: 'Sora', sans-serif;
+  --font-body:    'Inter', sans-serif;
+  --font-mono:    'IBM Plex Mono', monospace;
+}
+
+html { height: 100%; }
+body {
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: linear-gradient(150deg, var(--green-deep) 0%, #143828 55%, #0a1a10 100%);
+  min-height: 100%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 32px 16px;
+  -webkit-font-smoothing: antialiased;
+  position: relative; overflow-x: hidden;
+}
+
+/* Subtle background texture */
+body::before {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none;
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(194,242,61,.07) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(82,183,136,.06) 0%, transparent 45%);
+}
+
+/* ---------- Brand ---------- */
+.brand {
+  display: flex; align-items: center; gap: 9px;
+  font-family: var(--font-display); font-size: 1.3rem; font-weight: 800;
+  color: var(--white); text-decoration: none; margin-bottom: 28px;
+  position: relative; z-index: 1;
+  transition: opacity .15s;
+}
+.brand:hover { opacity: .85; }
+.brand em { color: var(--lime); font-style: normal; }
+.brand__mark { width: 30px; height: 30px; color: var(--lime); }
+
+/* ---------- Auth card ---------- */
+.auth {
+  display: flex; flex-direction: column; align-items: center;
+  width: 100%; max-width: 420px;
+  position: relative; z-index: 1;
+}
+
+.auth__card {
+  width: 100%;
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+/* ---------- Tabs ---------- */
+.auth__tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+}
+.auth__tab {
+  flex: 1; padding: 18px 12px;
+  font-family: var(--font-body); font-size: .95rem; font-weight: 600;
+  color: var(--muted); background: transparent; border: none;
+  cursor: pointer; transition: color .15s, background .15s;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+.auth__tab:hover { color: var(--green-mid); background: var(--surface); }
+.auth__tab.is-active {
+  color: var(--green-deep);
+  border-bottom-color: var(--lime);
+  background: var(--white);
+}
+
+/* ---------- Form body ---------- */
+.auth__body { padding: 28px 28px 24px; }
+
+/* ---------- Field Rows & Layout ---------- */
+.field-row {
+  display: flex;
+  gap: 14px;
+  width: 100%;
+}
+.field-row .field {
+  flex: 1;
+}
+
+.field {
+  display: flex; flex-direction: column; gap: 6px;
+  margin-bottom: 18px;
+}
+.field span {
+  font-size: .82rem; font-weight: 600; color: var(--ink-3);
+  letter-spacing: .02em;
+}
+.field input {
+  padding: .65rem .9rem;
+  font-family: var(--font-body); font-size: .95rem;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--ink);
+  transition: border-color .15s, box-shadow .15s;
+  outline: none;
+  width: 100%;
+}
+.field input::placeholder { color: #AABFA7; }
+.field input:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(82,183,136,.15);
+  background: var(--white);
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  font-family: var(--font-body); font-size: .95rem; font-weight: 600;
+  padding: .65rem 1.4rem; border-radius: 999px; border: none;
+  cursor: pointer; text-decoration: none;
+  transition: all .18s ease; white-space: nowrap;
+}
+.btn--lime        { background: var(--lime); color: var(--ink); }
+.btn--lime:hover  { background: var(--lime-dark); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(194,242,61,.4); }
+.btn--ghost       { background: transparent; color: var(--green-mid); border: 1.5px solid var(--border); }
+.btn--ghost:hover { background: var(--surface); }
+.btn--block       { width: 100%; margin-bottom: 10px; }
+
+/* ---------- Divider ---------- */
+.auth__divider {
+  display: flex; align-items: center; gap: 12px;
+  margin-block: 6px 4px; color: var(--muted); font-size: .8rem;
+}
+.auth__divider::before,
+.auth__divider::after {
+  content: ''; flex: 1; height: 1px; background: var(--border);
+}
+
+/* ---------- Note ---------- */
+.auth__note {
+  padding: 14px 28px 20px;
+  font-size: .78rem; color: var(--muted);
+  text-align: center; line-height: 1.55;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+}
+
+/* ---------- Back link ---------- */
+.auth__back {
+  margin-top: 20px;
+  font-size: .85rem; color: rgba(255,255,255,.55);
+  text-decoration: none; transition: color .15s;
+}
+.auth__back:hover { color: var(--lime); }
+
+/* ---------- Form visibility ---------- */
+.auth__form { display: flex; flex-direction: column; }
+.auth__form[hidden] { display: none; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 460px) {
+  .auth__body { padding: 22px 18px 18px; }
+  .auth__note { padding: 12px 18px 16px; }
+  .field-row { flex-direction: column; gap: 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- Inline SVG sprite -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M6 13c0-5 4-9 13-9 0 9-4 13-13 13-2 0-3-1-3-1 0-1 1-2 3-3z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M7 17c2-2 5-5 9-9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+</svg>
+
+<div class="auth">
+
+  <!-- Brand / logo -->
+  <a class="brand" href="landing.html">
+    <svg class="brand__mark" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-leaf"/></svg>
+    <span>Saaf<em>Spot</em></span>
+  </a>
+
+  <!-- Card -->
+  <div class="auth__card">
+
+    <!-- Tabs -->
+    <div class="auth__tabs" role="tablist">
+      <button class="auth__tab is-active" role="tab" aria-selected="true"
+              aria-controls="loginForm" id="tab-login">Log in</button>
+      <button class="auth__tab" role="tab" aria-selected="false"
+              aria-controls="signupForm" id="tab-signup">Sign up</button>
+    </div>
+
+    <!-- ── LOGIN FORM ── -->
+    <div class="auth__body">
+      <form class="auth__form" id="loginForm" novalidate>
+
+        <label class="field">
+          <span>Email</span>
+          <input type="email" name="email" placeholder="you@example.com"
+                 autocomplete="email" required>
+        </label>
+
+        <label class="field">
+          <span>Password</span>
+          <input type="password" name="password" placeholder="••••••••"
+                 autocomplete="current-password" required>
+        </label>
+
+        <button class="btn btn--lime btn--block" type="submit">Log in</button>
+
+        <div class="auth__divider">or</div>
+
+        <button class="btn btn--ghost btn--block" type="button" id="demoLoginBtn">
+          Use demo account
+        </button>
+
+      </form>
+
+      <!-- ── SIGNUP FORM ── -->
+      <form class="auth__form" id="signupForm" hidden novalidate>
+
+        <!-- Split Name Row -->
+        <div class="field-row">
+          <label class="field">
+            <span>First name</span>
+            <input type="text" name="firstName" placeholder="Jane"
+                   autocomplete="given-name" required>
+          </label>
+
+          <label class="field">
+            <span>Last name</span>
+            <input type="text" name="lastName" placeholder="Doe"
+                   autocomplete="family-name" required>
+          </label>
+        </div>
+
+        <label class="field">
+          <span>City</span>
+          <input type="text" name="city" placeholder="Jaipur" required>
+        </label>
+
+        <label class="field">
+          <span>Email</span>
+          <input type="email" name="email" placeholder="you@example.com"
+                 autocomplete="email" required>
+        </label>
+
+        <label class="field">
+          <span>Password</span>
+          <input type="password" name="password" placeholder="Create a password"
+                 autocomplete="new-password" required>
+        </label>
+
+        <button class="btn btn--lime btn--block" type="submit">Create account</button>
+
+      </form>
+    </div>
+
+    <!-- Note -->
+    <p class="auth__note">
+      This demo runs entirely in your browser — nothing you type here is sent anywhere.
+    </p>
+  </div>
+
+  <!-- Back link -->
+  <a class="auth__back" href="landing.html">&larr; Back to home</a>
+
+</div>
+
+<script>
+  // Tab switching
+  const tabs    = document.querySelectorAll('.auth__tab');
+  const login   = document.getElementById('loginForm');
+  const signup  = document.getElementById('signupForm');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => { t.classList.remove('is-active'); t.setAttribute('aria-selected','false'); });
+      tab.classList.add('is-active');
+      tab.setAttribute('aria-selected', 'true');
+
+      if (tab.id === 'tab-login') {
+        login.hidden  = false;
+        signup.hidden = true;
+      } else {
+        login.hidden  = true;
+        signup.hidden = false;
+      }
+    });
+  });
+
+  // Allow URL hash to pre-select tab: auth.html#signup
+  if (window.location.hash === '#signup') {
+    document.getElementById('tab-signup').click();
+  }
+
+  // Demo login button — just redirects to app (update href as needed)
+  document.getElementById('demoLoginBtn').addEventListener('click', () => {
+    alert('Demo login: redirecting to app shell…\n(Wire this up to your script.js / index.html)');
+  });
+
+  // Form submit stubs
+  login.addEventListener('submit', e => {
+    e.preventDefault();
+    alert('Log in submitted! Connect this to your authentication logic.');
+  });
+  signup.addEventListener('submit', e => {
+    e.preventDefault();
+    alert('Account created! Connect this to your authentication logic.');
+  });
+</script>
+</body>
+</html>

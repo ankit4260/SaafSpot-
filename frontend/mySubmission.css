@@ -1,0 +1,262 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+.container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+}
+
+button {
+    cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+    color: #33473C;
+}
+
+/* -----------sidebar--------- */
+
+.icon {
+    width: 18px;
+    height: 18px;
+}
+
+aside {
+    border-right: 1px solid #DCE9DD;
+    position: relative;
+    overflow: hidden;
+    width: 250px;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    height: 100vh;
+}
+
+
+.sbar {
+    width: 100%;
+}
+
+.brandName {
+    display: flex;
+    gap: 9px;
+    padding: 4px 4px 22px;
+    font-size: 19px;
+    color: #0e2818;
+    font-weight: 700;
+}
+
+.brandName em {
+    color: #235440;
+}
+
+.brandName svg {
+    width: 26px;
+    height: 26px;
+    color: #C2F23D;
+    ;
+}
+
+.reportBtn {
+    border: none;
+    border-radius: 18px;
+    display: flex;
+    gap: 9px;
+    margin: 6px 0px 22px;
+    padding: 12px 2px;
+    font-size: 15px;
+    font-weight: 500;
+    justify-content: center;
+    background: #C2F23D;
+}
+
+
+nav {
+    display: flex;
+    flex-direction: column;
+}
+
+nav a {
+    display: flex;
+    gap: 9px;
+    padding: 11px 14px;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.currentTab {
+    color: #ffffff;
+    border-radius: 10px;
+    background: #0e2818;
+}
+
+.logOutBtn {
+    border-radius: 18px;
+    position: absolute;
+    bottom: 20px;
+    color: #33473C;
+    display: flex;
+    gap: 12px;
+    padding: 11px 22px;
+    font-size: 15px;
+    font-weight: 500;
+    background: none;
+    border: none;
+    width: 80%;
+}
+
+.logOutBtn:hover {
+    background: #F9DAD7;
+}
+
+/*  --------main---------- */
+
+main {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    background: #F4FAF0;
+}
+
+.topbar {
+    position: sticky;
+    background: #ffffff;
+    width: 100%;
+    height: 12%;
+    display: flex;
+    justify-content: space-between;
+    padding: 18px 32px;
+    border-bottom: 1px solid #DCE9DD;
+    align-items: center;
+}
+
+.topbar h1 {
+    font-size: 21px;
+}
+
+.topbar div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#tobar-left-pt {
+    padding: 8px 16px;
+    border-radius: 16px;
+    background-color: #f2fbd8;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+#tobar-left-u {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #235440;
+    color: #C2F23D;
+    font-weight: bolder;
+    font-size: 16px;
+}
+
+section {
+    max-width: 1180px;
+    min-height: 88%;
+    padding: 30px 32px 60px;
+    overflow-y: auto;
+}
+
+.headtext {
+    margin-bottom: 18px;
+    color: #5c7468;
+}
+
+.filter {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+}
+
+.filter button.filter_current {
+    background: #0e2818;
+    color: #ffffff;
+}
+
+.filter button {
+    background-color: #ffffff;
+    color: #5c7468;
+    padding: 8px 16px;
+    font-size: 14px;
+    border: 1px solid #DCE9DD;
+    border-radius: 16px;
+}
+
+.filter button:hover {
+    border:1px solid #5c7468 ;
+}
+
+.sub_card {
+    display: flex;
+    padding: 18px 20px;
+    background-color: #ffffff;
+    font-size: 16px;
+    gap: 18px;
+    flex-wrap: wrap;
+    border-radius: 16px;
+    align-items: center;
+}
+
+.sub_card_svg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background: #DCE9DD;
+    border-radius: 12px;
+}
+
+.sub_card_body_data {
+    margin-top: 4px;
+    color: #a9bbaf;
+    font-size: 13px;
+}
+
+.sub_card_body {
+    margin: 0px auto 0px 0px;
+}
+
+.sub_card_metadata {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    font-weight: 600;
+}
+
+#sub_card_metadata_i {
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+}
+
+.submissionList {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
